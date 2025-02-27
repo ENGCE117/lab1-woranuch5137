@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void GetMatrix( int **value, int *row, int *col ) ;
 void PrintMatrix( int *value, int row, int col ) ;
@@ -17,26 +18,30 @@ int main() {
 }//end function
 
 void GetMatrix( int **value, int *row, int *col ) {
-    printf( "Enter the nunber of rows: " ) ;
-    scanf( "%d", row ) ; //รับจำนวนแถว
+    printf( "Enter the nunber of rows and cols : " ) ;
+    scanf( "%d %d", row, col ) ; //รับจำนวนแถวและคอลัมน์
     
+    *value = new int[ *row * *col ] ;//จัดสรรหน่วยความจำใหม่ตามที่อิพุกเข้ามา
+    if( *value == NULL ) { //ตรวจสอบว่าจัดสรรหน่วยความจำสำเร็จมั้ย
+        printf( "Memory allocation failed!\n" ) ;
+        exit(1) ;
+    } //ออก
 
-    printf( "Enter the number of cols: " ) ;
-        scanf( "%d", col ) ; //รับจำนวนคอลลัมน์
-       
-    
-    for( int i = 0 ; i < *row ; i++ ) { //รับค่าเมทริกซ์จากผู้ใช้
+    for( int i = 0 ; i < *row ; i++ ) {
         for( int j = 0 ; j < *col ; j++ ) {
-            printf( "Enter element at [%d][%d]: ", i + 1, j + 1 ) ;
-            scanf( "%d", &(*value)[i * (*col) + j] ) ; //รับค่าที่ตำแหน่ง i,j
-        }//end for 
-    }//end for 
+            scanf( "%d", &(*value)[ i * (*col) + j] ) ; //รับค่าที่ตำแหน่ง i,j
+        }
+    }
+    
+     
 }//end void
 
-void PrintMatrix( int *value, int row, int col ) {
+void PrintMatrix( int *value, int row, int col ) { //รับค่าจากผู้ใช้
+    printf( "Matrix (%dx%d) : \n", row, col ) ;
     for( int i = 0 ; i < row ; i++ ) { //พิมพ์เมทริกซ์ที่เก็บในหน่วยความจำ
         for( int j = 0 ; j < col ; j++ ) {
-            printf( "%d", value[i * col + j] ) ; //พิมพ์ค่าในตำแหน่ง i,j
+            printf( "%d ", value[i * col + j] ) ; //พิมพ์ค่าในตำแหน่ง i,j
         }
+        printf( "\n" ) ;
     }//end for
 }//end void
